@@ -5,20 +5,20 @@ const uglify = require('gulp-uglify');
 const obfuscate = require('gulp-obfuscate');
 const imagemin = require('gulp-imagemin');
 
-function comprimeImagem(){
+function imgCompressor(){
     return gulp.src('./source/images/*')
         .pipe(imagemin())
         .pipe(gulp.dest('./build/images'));
 }
 
-function comprimeJs(){
+function jsMinifier(){
     return gulp.src('./source/scripts/*.js')
         .pipe(uglify())
         .pipe(obfuscate())
         .pipe(gulp.dest('./build/scripts'))
 }
 
-function compilaSass(){
+function sassCompilator(){
     return gulp.src('./source/styles/main.scss')
         .pipe(sourcemaps.init())
         .pipe(sass({
@@ -30,7 +30,7 @@ function compilaSass(){
 
 
 exports.default =  function(){
-    gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(compilaSass));
-    gulp.watch('./source/scripts/*.js', {ignoreInitial: false}, gulp.series(comprimeJs));
-    gulp.watch('./source/images/*', {ignoreInitial: false}, gulp.series(comprimeImagem));
+    gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(sassCompilator));
+    gulp.watch('./source/scripts/*.js', {ignoreInitial: false}, gulp.series(jsMinifier));
+    gulp.watch('./source/images/*', {ignoreInitial: false}, gulp.series(imgCompressor));
 }
